@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Item Description{% endblock %}
+
+{% block content %}
+    <h1>{{ item.name }}</h1>
+    <p>{{ item.description }}</p>
+    <p>Daily Price: £{{ item.daily_price }}</p>
+    
+    <p>Available Dates:</p>
+    <ul>
+        {% for date in available_dates %}
+            <li>{{ date }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
