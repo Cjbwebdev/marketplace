@@ -15,11 +15,7 @@ class Migration(migrations.Migration):
             name='item',
             unique_together=set(),
         ),
-        migrations.AddField(
-            model_name='item',
-            name='available_dates',
-            field=models.TextField(blank=True, null=True),
-        ),
+        
         migrations.AddField(
             model_name='item',
             name='created_at',
@@ -45,12 +41,5 @@ class Migration(migrations.Migration):
             name='image',
             field=models.ImageField(upload_to='items/'),
         ),
-        migrations.RemoveField(
-            model_name='item',
-            name='end_date',
-        ),
-        migrations.RemoveField(
-            model_name='item',
-            name='start_date',
-        ),
+        
     ]

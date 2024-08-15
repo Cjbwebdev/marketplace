@@ -23,7 +23,7 @@ def items(request):
         'category_id' : int(category_id),
     })
 
-#item details?
+#item details
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
     related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[:3]

@@ -4,7 +4,6 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -24,14 +23,10 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField()),
                 ('image', models.ImageField(upload_to='')),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField()),
                 ('daily_price', models.FloatField()),
                 ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='item.category')),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-                'unique_together': {('category', 'name', 'start_date', 'end_date')},
-            },
+            
         ),
     ]

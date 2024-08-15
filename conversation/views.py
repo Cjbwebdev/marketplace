@@ -11,7 +11,7 @@ def new_conversation(request, item_pk):
         return redirect('dashboard:index')
 
     # Check for existing conversations
-    conversations = Conversation.objects.filter(item=item, members__in=[request.user.id])
+    conversations = Conversation.objects.filter(item=item, members=request.user)
     if conversations.exists():
         # Redirect to the existing conversation (assuming you have a URL named 'conversation:detail')
         return redirect('conversation:detail', pk=conversations.first().pk)
@@ -23,20 +23,27 @@ def new_conversation(request, item_pk):
             conversation = Conversation.objects.create(item=item)
             conversation.members.add(request.user)
             conversation.members.add(item.created_by)
-            conversation.save()
 
             # Create and save the conversation message
             conversation_message = form.save(commit=False)
-            conversation_message.conversation = conversation  # Fixed typo here
+            conversation_message.conversation = conversation
             conversation_message.created_by = request.user
             conversation_message.save()
 
-            # Redirect to item detail page after creating the conversation
-            return redirect('items:detail', pk=item_pk)
+            # Redirect to the newly created conversation detail page
+            return redirect('conversation:detail', pk=conversation.pk)
     else:
         form = ConversationMessageForm()
 
     return render(request, 'conversation/new.html', {
         'form': form,
-        'item': item  # You might want to pass the item to the template for context
+        'item': item
+    })
+
+def inbox(request):
+    # Fetch conversations where the current user is a member
+    conversations = Conversation.objects.filter(members=request.user)
+    
+    return render(request, 'conversation/new.html', {
+        'conversations': conversations
     })
