@@ -17,3 +17,7 @@ class ConversationMessage(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='created_messages', on_delete=models.CASCADE)  
+
+
+def __str__(self):
+        return f"Message from {self.created_by.username} on {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
